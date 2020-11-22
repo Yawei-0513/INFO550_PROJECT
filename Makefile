@@ -1,11 +1,19 @@
 # rule for making report  
 Report.html: figs/01_make_figure_sampleA.png figs/02_make_figure_sampleB.png figs/03_make_figure_sampleC.png figs/04_make_figure_sampleD.png figs/05_make_figure_summary.png R/06_report.Rmd
-	Rscript -e "rmarkdown::render('R/06_report.Rmd', output_file='../report.html',quiet = TRUE)"
+	Rscript -e "rmarkdown::render('R/06_report.Rmd', output_file='../report/report.html',quiet = TRUE)"
 
+#build docker image
+.PHONY:build
+build: Dockerfile
+	docker build -t image .
 # make help
 .PHONY: help
-help: Makefile
-	@sed -n 's/^##//p' $<
+help: 
+	@echo "report.html : Generate final analysis report."
+	@echo "install     : Install package needed for analysis."
+	@echo "figs.png    : Make a barplots for normalization result by using different methods."
+	@echo "build       : Build docker image."
+	@echo "remove      : Remove report and figure."
 
 # rule for making figures
 
@@ -28,5 +36,5 @@ figs/05_make_figure_summary.png: R/05_make_figure_summary.R data/sampleA.csv dat
 
 # rule for installing packages
 .PHONY: install
-install: 00_install_packages.Rmd
-	chmod +x R/00_install_packages.Rmd && R/00_install_packages.Rmd
+install: 
+	chmod +x R/00_install_packages.R && Rscript R/00_install_packages.R
