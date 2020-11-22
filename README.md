@@ -22,15 +22,15 @@ Execute analysis in docker
 
 Before analysis, you need to pull the docker image using the  command:
 ```
-docker pull Yawei-0513/proj
+docker pull 2421281/image .
 ```
-You will build the docker image locally by running command:
+or you could build the docker image locally by running command:
 ```
 make build
 ```
 If you want to get the final report, you will need to mount your local directory by using  command:
 ```
-docker run -v /localpath/report:/project/report -it Yawei-0513/proj
+docker run -v /localpath/report:/project/report 2421281/proj
 ```
 Note: the "localpath" is the path where you saved the project directory.
 
